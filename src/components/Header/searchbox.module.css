@@ -1,0 +1,83 @@
+.searchbox-container {
+  width: 70%;
+  min-width: 20rem;
+}
+.searchbox {
+  width: 100%;
+  background-color: white;
+  border-radius: 59px;
+  padding: 0.7rem;
+  display: flex;
+}
+
+.searchicon {
+  color: #291507;
+  vertical-align: middle;
+}
+
+.searchinput {
+  border: none;
+  outline: none;
+  font-size: 18px;
+  width: 100%;
+  margin-inline: 0.4rem;
+  color: #291507;
+  vertical-align: middle;
+}
+
+.searchinput::placeholder {
+  color: #291507;
+}
+
+.suggestions-container {
+  background-color: #ffffff;
+  border-radius: 24px;
+  margin-top: 0.7rem;
+  padding: 9px 10px;
+  display: none;
+}
+.suggestions {
+  width: 100%;
+  color: #000000;
+  background-color: #ffffff;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+  padding: 0.7rem;
+  height: 219.72px;
+  overflow-y: scroll;
+}
+.suggestions li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.suggestions li:hover {
+  background: rgba(151, 151, 151, 0.1);
+  border-radius: 12px;
+}
+
+.suggestions::-webkit-scrollbar {
+  width: 4.27px;
+  border-radius: 24px;
+  background: #bdbdbd;
+}
+
+/* Track */
+.suggestions::-webkit-scrollbar-track {
+  background: #f2f2f2;
+  border-radius: 24px;
+}
+
+/* Handle */
+.suggestions::-webkit-scrollbar-thumb {
+  background: #a09f9f;
+}
+
+/* Handle on hover */
+.suggestions::-webkit-scrollbar-thumb:hover {
+  background: #9b9a9a;
+}

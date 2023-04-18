@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Main from './components/Main';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div style={{ margin: '1rem 3rem' }}>
+      <a href='/'>
+        <img src={'./images/CatwikiLogo.svg'} alt='brand name' />
+      </a>
     </div>
+    <div style={{ margin: '0rem 3rem 2rem' }}>
+      <Routes>
+          <Route path='/' element={<><Header /> <Main /></>}>
+        </Route>
+      </Routes>
+      <Footer/>
+    </div>
+    </>
   );
 }
 

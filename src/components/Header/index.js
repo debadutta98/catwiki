@@ -17,9 +17,9 @@ export default function Header(props){
             <h4>Most Searched Breeds <hr/></h4>
                 <div className='most-searched__details-container'>
                 <h1>66+ Breeds For you to discover</h1>
-                <a href='/'>SEE MORE <span className="material-icons right-arrow">
+                <Link to='mostSearched'>SEE MORE <span className="material-icons right-arrow">
                     trending_flat
-                </span></a>
+                </span></Link>
             </div>
             <ul className='most-searched__breeds'>
                 <li>

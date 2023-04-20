@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './index.css';
 import SearchBox from './SearchBox';
-export default function Header(props){
+export default function Header(){
     return <>
         <div className='hero-section'>
             <div className='hero-details'>

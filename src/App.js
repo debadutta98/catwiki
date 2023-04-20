@@ -5,15 +5,11 @@ import { Routes, Route, NavLink } from "react-router-dom";
 import Catalog from "./components/Catalog";
 import Fullview from "./components/Fullview";
 import MostSearchedBreed from "./components/MostSearchedBreeds";
+import { useEffect, useState } from "react";
 
 function App() {
   return (
     <>
-      <nav style={{ margin: "1rem 3rem" }}>
-        <NavLink to="/">
-          <img src={"./images/CatwikiLogo.svg"} alt="brand name" />
-        </NavLink>
-      </nav>
       <Routes>
         <Route
           path="/"

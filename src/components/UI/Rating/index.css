@@ -1,0 +1,11 @@
+.rate {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+}
+.rate div {
+    width: 60px;
+    height: 12px;
+    background: #E0E0E0;
+    border-radius: 8px;
+}

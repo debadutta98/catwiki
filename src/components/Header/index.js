@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom';
 import './index.css';
 import SearchBox from './SearchBox';
 export default function Header(props){
-    return <header>
+    return <>
         <div className='hero-section'>
             <div className='hero-details'>
                 <figure>
@@ -16,18 +17,18 @@ export default function Header(props){
             <h4>Most Searched Breeds <hr/></h4>
                 <div className='most-searched__details-container'>
                 <h1>66+ Breeds For you to discover</h1>
-                <a href='/'>SEE MORE <span class="material-icons right-arrow">
+                <a href='/'>SEE MORE <span className="material-icons right-arrow">
                     trending_flat
                 </span></a>
             </div>
             <ul className='most-searched__breeds'>
                 <li>
-                        <a href='/'>
+                        <Link to='/view/breed'>
                             <figure>
                                 <img src='https://cdn2.thecatapi.com/images/anb.jpg' alt='firstimage'/>
                                 <figcaption>Bangal</figcaption>
                             </figure>
-                        </a>
+                        </Link>
                 </li>
                 <li>
                         <a href='/'>
@@ -55,5 +56,5 @@ export default function Header(props){
                 </li>
             </ul>
         </div>
-    </header>;
+    </>;
 }

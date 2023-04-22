@@ -3,134 +3,162 @@ import Rating from "../UI/Rating";
 import "./index.css";
 import { useEffect, useState } from "react";
 import SkeletonLayout from "./SkeletonLayout";
+import GallerySkeletonLayout from "./GallerySkeletonLayout";
 
 export default function Fullview() {
   const params = useParams();
   const [breedPhotos, setBreedPhotos] = useState([]);
   const [breedDetails, setBreedDetails] = useState({});
   useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    Promise.allSettled([
-      fetch(
-        `https://api.thecatapi.com/v1/breeds/${params.breed}?api_key=${process.env.REACT_APP_CAT_API_KEY}&breed_ids=${params.breed}&limit=10&page=1`,
+    if (params.breedId && params.imageId) {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const searchedBreedDetailsResult = fetch(
+        `https://api.thecatapi.com/v1/images/${params.imageId}?api_key=${process.env.REACT_APP_CAT_API_KEY}`,
         options
-      ),
-      fetch(
-        `https://api.thecatapi.com/v1/images/search?api_key=${process.env.REACT_APP_CAT_API_KEY}&breed_ids=${params.breed}&limit=10&page=1`,
+      );
+      const breedPhotos = fetch(
+        `https://api.thecatapi.com/v1/images/search?api_key=${process.env.REACT_APP_CAT_API_KEY}&breed_ids=${params.breedId}&limit=10&page=1`,
         options
-      ),
-    ])
-      .then(async (res) => {
-        if (res[0].status === "fulfilled") {
-          const breed = await res[0].value.json();
-          setBreedDetails({
-            id: breed.id,
-            name: breed.name,
-            description: breed.description,
-            lifeSpan: breed.life_span,
-            origin: breed.origin,
-            temperament: breed.temperament,
-            adaptability: breed.adaptability,
-            affectionLevel: breed.affection_level,
-            childFriendly: breed.child_friendly,
-            grooming: breed.grooming,
-            intelligence: breed.intelligence,
-            healthIssues: breed.health_issues,
-            socialNeeds: breed.social_needs,
-            strangerFriendly: breed.stranger_friendly,
-          });
-        }
-        if (res[1].status === "fulfilled") {
-          const photos = await res[1].value.json();
-          setBreedPhotos(
-            photos.slice(1, 10).map((value) => ({
-              id: value.id,
-              url: value.url,
-            }))
-          );
-            setBreedDetails((prevBreedDetails)=>({
-                ...prevBreedDetails,
-                imageUrl: photos[0].url
-            }));
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [params.breed]);
+      );
+      const convertToJson = async (res) => await res.json();
+      const errorHandler = (error) => {
+        console.error(error);
+      };
+      searchedBreedDetailsResult
+        .then(convertToJson)
+        .then(async (response) => {
+          if (Array.isArray(response.breeds) && response.breeds.length > 0) {
+            const breedDetails = {
+              imageUrl: response.url,
+              name: response.breeds[0].name,
+              description: response.breeds[0].description,
+              lifeSpan: response.breeds[0].life_span,
+              origin: response.breeds[0].origin,
+              temperament: response.breeds[0].temperament,
+              adaptability: response.breeds[0].adaptability,
+              affectionLevel: response.breeds[0].affection_level,
+              childFriendly: response.breeds[0].child_friendly,
+              grooming: response.breeds[0].grooming,
+              intelligence: response.breeds[0].intelligence,
+              healthIssues: response.breeds[0].health_issues,
+              socialNeeds: response.breeds[0].social_needs,
+              strangerFriendly: response.breeds[0].stranger_friendly,
+            };
+            setBreedDetails(breedDetails);
+            try {
+              await fetch('/.netlify/functions/updateSearchedBreedView', {
+                method: 'POST',
+                body: JSON.stringify({
+                  imageUrl: response.url,
+                  id: response.breeds[0].id,
+                  name: response.breeds[0].name,
+                  description: response.breeds[0].description,
+                })
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          } else {
+            console.error("got empty response");
+          }
+        })
+        .catch(errorHandler);
+      breedPhotos
+        .then(convertToJson)
+        .then((photos) => {
+          if (Array.isArray(photos) && photos.length > 0) {
+            setBreedPhotos(
+              photos.map((value) => ({
+                id: value.id,
+                url: value.url,
+              }))
+            );
+          } else {
+            console.error("got empty response");
+          }
+        })
+        .catch(errorHandler);
+    } else {
+      console.log('show empty page');
+    }
+  }, [params.breedId, params.imageId]);
   return (
-      Object.keys(breedDetails).length > 0 ? 
-      <div className="fullview">
-      <div className="col">
-        <div className="breedImage">
-          {/* <span className="highlight"></span> */}
-          <img
-            src={breedDetails.imageUrl}
-            alt="breedimage"
-          />
-        </div>
-        <div className="breedDetails">
-          <h2>{breedDetails.name}</h2>
-          <p>{breedDetails.description}</p>
-          <div className="text-container">
-            <b>Temperament:</b>
-            <span>{breedDetails.temperament}</span>
+    <div className="fullview">
+      {Object.keys(breedDetails).length > 0 ? (
+        <div className="col">
+          <div className="breedImage">
+            {/* <span className="highlight"></span> */}
+            <img src={breedDetails.imageUrl} alt="breedimage" />
           </div>
-          <div className="text-container">
-            <b>Origin:</b>
-            <span>{breedDetails.origin}</span>
-          </div>
-          <div className="text-container">
-            <b>Life Span:</b>
-            <span>{breedDetails.lifeSpan}</span>
-          </div>
-          <div className="rate-container">
-            <b>Adaptability:</b>
-            <Rating rate={breedDetails.adaptability || 0} />
-          </div>
-          <div className="rate-container">
-            <b>Affection level:</b>
-            <Rating rate={breedDetails.affectionLevel || 0} />
-          </div>
-          <div className="rate-container">
-            <b>Child Friendly:</b>
-            <Rating rate={breedDetails.childFriendly || 0} />
-          </div>
-          <div className="rate-container">
-            <b>Grooming:</b>
-            <Rating rate={breedDetails.grooming || 0} />
-          </div>
-          <div className="rate-container">
-            <b>Intelligence:</b>
-            <Rating rate={breedDetails.intelligence || 0} />
-          </div>
-          <div className="rate-container">
-            <b>Health issues:</b>
-            <Rating rate={breedDetails.healthIssues || 0} />
-          </div>
-          <div className="rate-container">
-            <b>Social needs:</b>
-            <Rating rate={breedDetails.socialNeeds || 0} />
-          </div>
-          <div className="rate-container">
-            <b>Stranger friendly:</b>
-            <Rating rate={breedDetails.strangerFriendly || 0} />
+          <div className="breedDetails">
+            <h2>{breedDetails.name}</h2>
+            <p>{breedDetails.description}</p>
+            <div className="text-container">
+              <b>Temperament:</b>
+              <span>{breedDetails.temperament}</span>
+            </div>
+            <div className="text-container">
+              <b>Origin:</b>
+              <span>{breedDetails.origin}</span>
+            </div>
+            <div className="text-container">
+              <b>Life Span:</b>
+              <span>{breedDetails.lifeSpan}</span>
+            </div>
+            <div className="rate-container">
+              <b>Adaptability:</b>
+              <Rating rate={breedDetails.adaptability || 0} />
+            </div>
+            <div className="rate-container">
+              <b>Affection level:</b>
+              <Rating rate={breedDetails.affectionLevel || 0} />
+            </div>
+            <div className="rate-container">
+              <b>Child Friendly:</b>
+              <Rating rate={breedDetails.childFriendly || 0} />
+            </div>
+            <div className="rate-container">
+              <b>Grooming:</b>
+              <Rating rate={breedDetails.grooming || 0} />
+            </div>
+            <div className="rate-container">
+              <b>Intelligence:</b>
+              <Rating rate={breedDetails.intelligence || 0} />
+            </div>
+            <div className="rate-container">
+              <b>Health issues:</b>
+              <Rating rate={breedDetails.healthIssues || 0} />
+            </div>
+            <div className="rate-container">
+              <b>Social needs:</b>
+              <Rating rate={breedDetails.socialNeeds || 0} />
+            </div>
+            <div className="rate-container">
+              <b>Stranger friendly:</b>
+              <Rating rate={breedDetails.strangerFriendly || 0} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col">
-        <h2>Other photos</h2>
-        <div className="photo-gallery">
-          {breedPhotos.map((images) => (
-            <img src={images.url} alt={images.id} key={images.id} />
-          ))}
+      ) : (
+        <SkeletonLayout />
+      )}
+      {Array.isArray(breedPhotos) && breedPhotos.length > 0 ? (
+        <div className="col">
+          <h2>Other photos</h2>
+          <div className="photo-gallery">
+            {breedPhotos.map((images) => (
+              <img src={images.url} alt={images.id} key={images.id} />
+            ))}
+          </div>
         </div>
-      </div>
-    </div> : <SkeletonLayout />
+      ) : (
+        <GallerySkeletonLayout />
+      )}
+    </div>
   );
 }

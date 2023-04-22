@@ -1,9 +1,7 @@
 import Skeleton from 'react-loading-skeleton';
-import './index.css';
 import Rating from '../UI/Rating';
 export default function SkeletonLayout() {
-    return <div className="fullview">
-        <div className="col">
+    return <div className="col">
             <div className="breedImage">
                 <Skeleton style={{ height:'250px', width: '250px', borderRadius:'24px' }} count={1}/>
             </div>
@@ -56,18 +54,4 @@ export default function SkeletonLayout() {
                 </div>
             </div>
         </div>
-        <div className="col">
-            <h2>Other photos</h2>
-            <div className="photo-gallery">
-                <Skeleton style={{ height: '220px', width: '220px', borderRadius: '24px' }} count={1} />
-                <Skeleton style={{ height: '220px', width: '220px', borderRadius: '24px' }} count={1} />
-                <Skeleton style={{ height: '220px', width: '220px', borderRadius: '24px' }} count={1} />
-                <Skeleton style={{ height: '220px', width: '220px', borderRadius: '24px' }} count={1} />
-                <Skeleton style={{ height: '220px', width: '220px', borderRadius: '24px' }} count={1} />
-                <Skeleton style={{ height: '220px', width: '220px', borderRadius: '24px' }} count={1} />
-                <Skeleton style={{ height: '220px', width: '220px', borderRadius: '24px' }} count={1} />
-                <Skeleton style={{ height: '220px', width: '220px', borderRadius: '24px' }} count={1} />
-            </div>
-        </div>
-    </div>
 }

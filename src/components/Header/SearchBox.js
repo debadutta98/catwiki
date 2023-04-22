@@ -22,13 +22,14 @@ export default function SearchBox() {
         setBreeds(
           breeds.map((breed) => ({
             id: breed.id,
-            name: breed.name
+            name: breed.name,
+            imageId: breed.reference_image_id
           }))
         )
       )
       .catch((err) => {
         console.log(err);
-      });
+      }); 
   }, []);
   const onChangeSearchHandler = (event) => {
     const value = event.target.value.trim().toLowerCase();
@@ -40,30 +41,33 @@ export default function SearchBox() {
       setSuggestions([]);
     }
   };
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    setDisable(true);
+    fetch(
+      `https://api.thecatapi.com/v1/breeds/search/?name=${searchRef.current.value}`
+    )
+      .then(async (res) => await res.json())
+      .then((breeds) => {
+        if (breeds.length > 0) {
+          navigate(`breed/${breeds[0].id}/${breeds[0].imageId}`)
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        searchRef.current.value = "";
+        setDisable(false);
+      });
+  };
+  
   return (
     <div className={style["searchbox-container"]}>
       <form
         className={style.searchbox}
-        onSubmit={(event) => {
-          event.preventDefault();
-          setDisable(true);
-          fetch(
-            `https://api.thecatapi.com/v1/breeds/search/?name=${searchRef.current.value}`
-          )
-            .then(async (res) => await res.json())
-            .then((breeds) => {
-                if(breeds.length > 0) {
-                    navigate(`view/${breeds[0].id}`)
-                }
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-            .finally(() => {
-              searchRef.current.value = "";
-              setDisable(false);
-            });
-        }}
+        onSubmit={onSubmitHandler}
       >
         <input
           type="text"
@@ -86,7 +90,7 @@ export default function SearchBox() {
             {suggestions.map((suggestionBreed, index) => (
               <li
                 key={index}
-                onClick={() => navigate(`view/${suggestionBreed.id}`)}
+                onClick={() => navigate(`breed/${suggestionBreed.id}/${suggestionBreed.imageId}`)}
               >
                 {suggestionBreed.name}
               </li>

@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Rating from "../UI/Rating";
 import "./index.css";
 import { useEffect, useState } from "react";
@@ -7,12 +7,11 @@ import GallerySkeletonLayout from "./GallerySkeletonLayout";
 import { ImageCard } from "../UI/ImageCard";
 
 export default function Fullview() {
-  const params = useParams();
-  const location = useLocation();
+  const { state } = useLocation();
   const [breedPhotos, setBreedPhotos] = useState([]);
   const [breedDetails, setBreedDetails] = useState({});
   useEffect(() => {
-    if (params.breedId && params.imageId) {
+    if (state?.breedId && state?.imageId) {
       const options = {
         method: "GET",
         headers: {
@@ -24,7 +23,7 @@ export default function Fullview() {
         console.error(error);
       };
       fetch(
-        `https://api.thecatapi.com/v1/images/${params.imageId}?api_key=${process.env.REACT_APP_CAT_API_KEY}`,
+        `https://api.thecatapi.com/v1/images/${state?.imageId}?api_key=${process.env.REACT_APP_CAT_API_KEY}`,
         options
       )
         .then(convertToJson)
@@ -67,7 +66,7 @@ export default function Fullview() {
         })
         .catch(errorHandler);
       fetch(
-        `https://api.thecatapi.com/v1/images/search?api_key=${process.env.REACT_APP_CAT_API_KEY}&breed_ids=${params.breedId}&limit=10&page=1`,
+        `https://api.thecatapi.com/v1/images/search?api_key=${process.env.REACT_APP_CAT_API_KEY}&breed_ids=${state?.breedId}&limit=10&page=1`,
         options
       )
         .then(convertToJson)
@@ -87,13 +86,13 @@ export default function Fullview() {
     } else {
       console.log('show empty page');
     }
-  }, [params.breedId, params.imageId]);
+  }, [state?.breedId, state?.imageId]);
   return (
     <div className="fullview">
       {Object.keys(breedDetails).length > 0 ? (
         <div className="col">
           <div className="breedImage">
-            {location.state?.mostSearched && <span className="highlight"></span>}
+            {state?.mostSearched && <span className="highlight"></span>}
             <ImageCard src={breedDetails.imageUrl} alt="breedimage" />
           </div>
           <div className="breedDetails">

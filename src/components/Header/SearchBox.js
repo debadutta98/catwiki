@@ -51,7 +51,11 @@ export default function SearchBox() {
       .then(async (res) => await res.json())
       .then((breeds) => {
         if (breeds.length > 0) {
-          navigate(`breed/${breeds[0].id}/${breeds[0].imageId}`)
+          navigate('breed', {
+            state: {
+              imageId: breeds[0].reference_image_id,
+              breedId: breeds[0].id
+            }})
         }
       })
       .catch((err) => {
@@ -90,7 +94,12 @@ export default function SearchBox() {
             {suggestions.map((suggestionBreed, index) => (
               <li
                 key={index}
-                onClick={() => navigate(`breed/${suggestionBreed.id}/${suggestionBreed.imageId}`)}
+                onClick={() => navigate('breed',{
+                  state:{
+                    imageId: suggestionBreed.imageId,
+                    breedId: suggestionBreed.id
+                  }
+                })}
               >
                 {suggestionBreed.name}
               </li>

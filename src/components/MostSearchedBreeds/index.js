@@ -18,7 +18,7 @@ export default function MostSearchedBreed(props){
     return <div className='most-searched-breed'>
         <h2>Top 10 most searched breeds</h2>
         <ul className="breedList">
-            {mostSearchedBreed.length > 0 ? mostSearchedBreed.map((breed, index) => <Link to={`../breed/${breed.id}/${breed.imageId}`} state={{ mostSearched: index === 0 }} key={breed._id}><BreedType url={breed.imageUrl} name={breed.name} descr={breed.description}/> </Link>): <BreedTypeSkeleton />}
+            {mostSearchedBreed.length > 0 ? mostSearchedBreed.map((breed, index) => <Link to={'../breed'} state={{ mostSearched: index === 0, imageId: breed.imageId, breedId: breed.id }} key={breed._id}><BreedType url={breed.imageUrl} name={breed.name} descr={breed.description}/> </Link>): <BreedTypeSkeleton />}
         </ul>
     </div>
 }

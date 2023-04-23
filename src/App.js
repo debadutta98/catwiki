@@ -17,6 +17,7 @@ function App() {
               <Layout />
             </>
           }
+          errorElement={<NotFound message="Please refresh this page or go back and try again"/>}
         >
           <Route
             index
@@ -26,10 +27,11 @@ function App() {
                 <Catalog />
               </>
             }
+            errorElement={<NotFound message="Please refresh this page or go back and try again" />}
           />
-          <Route path="breed/:breedId/:imageId" element={<Fullview />} caseSensitive />
-          <Route path="mostSearched" element={<MostSearchedBreed />} caseSensitive />
-          <Route path="*" element={<NotFound/>}/>
+          <Route path="breed" element={<Fullview />} errorElement={<NotFound message="Please refresh this page or go back and try again" />} caseSensitive />
+          <Route path="mostSearched" element={<MostSearchedBreed />} errorElement={<NotFound message="Please refresh this page or go back and try again" />}  caseSensitive />
+          <Route path="*" element={<NotFound message="Please refresh this page or go back and try again"/>} />
         </Route>
       </Routes>
     </>

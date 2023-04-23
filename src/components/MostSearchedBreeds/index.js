@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import BreedType from '../UI/BreedType';
 import './index.css';
 import BreedTypeSkeleton from '../UI/BreedType/BreedTypeSkeleton';
+import { Link } from 'react-router-dom';
 
 export default function MostSearchedBreed(props){
     const [mostSearchedBreed, setMostSearchedBreed] = useState([]);
@@ -17,7 +18,7 @@ export default function MostSearchedBreed(props){
     return <div className='most-searched-breed'>
         <h2>Top 10 most searched breeds</h2>
         <ul className="breedList">
-            {mostSearchedBreed.length > 0 ? mostSearchedBreed.map((breed) => <BreedType key={breed.id} url={breed.imageUrl} name={breed.name} descr={breed.description}/>): <BreedTypeSkeleton />}
+            {mostSearchedBreed.length > 0 ? mostSearchedBreed.map((breed, index) => <Link to={`../breed/${breed.id}/${breed.imageId}`} state={{ mostSearched: index === 0 }} key={breed._id}><BreedType url={breed.imageUrl} name={breed.name} descr={breed.description}/> </Link>): <BreedTypeSkeleton />}
         </ul>
     </div>
 }

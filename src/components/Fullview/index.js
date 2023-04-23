@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Rating from "../UI/Rating";
 import "./index.css";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { ImageCard } from "../UI/ImageCard";
 
 export default function Fullview() {
   const params = useParams();
+  const location = useLocation();
   const [breedPhotos, setBreedPhotos] = useState([]);
   const [breedDetails, setBreedDetails] = useState({});
   useEffect(() => {
@@ -18,19 +19,14 @@ export default function Fullview() {
           "Content-Type": "application/json",
         },
       };
-      const searchedBreedDetailsResult = fetch(
-        `https://api.thecatapi.com/v1/images/${params.imageId}?api_key=${process.env.REACT_APP_CAT_API_KEY}`,
-        options
-      );
-      const breedPhotos = fetch(
-        `https://api.thecatapi.com/v1/images/search?api_key=${process.env.REACT_APP_CAT_API_KEY}&breed_ids=${params.breedId}&limit=10&page=1`,
-        options
-      );
       const convertToJson = async (res) => await res.json();
       const errorHandler = (error) => {
         console.error(error);
       };
-      searchedBreedDetailsResult
+      fetch(
+        `https://api.thecatapi.com/v1/images/${params.imageId}?api_key=${process.env.REACT_APP_CAT_API_KEY}`,
+        options
+      )
         .then(convertToJson)
         .then(async (response) => {
           if (Array.isArray(response.breeds) && response.breeds.length > 0) {
@@ -70,7 +66,10 @@ export default function Fullview() {
           }
         })
         .catch(errorHandler);
-      breedPhotos
+      fetch(
+        `https://api.thecatapi.com/v1/images/search?api_key=${process.env.REACT_APP_CAT_API_KEY}&breed_ids=${params.breedId}&limit=10&page=1`,
+        options
+      )
         .then(convertToJson)
         .then((photos) => {
           if (Array.isArray(photos) && photos.length > 0) {
@@ -94,7 +93,7 @@ export default function Fullview() {
       {Object.keys(breedDetails).length > 0 ? (
         <div className="col">
           <div className="breedImage">
-            {/* <span className="highlight"></span> */}
+            {location.state?.mostSearched && <span className="highlight"></span>}
             <ImageCard src={breedDetails.imageUrl} alt="breedimage" />
           </div>
           <div className="breedDetails">

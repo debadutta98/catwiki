@@ -43,9 +43,9 @@ export default function Header() {
           </Link>
         </div>
         <ul className="most-searched__breeds">
-          {topSearchedbeed.map((value) => (
+          {topSearchedbeed.map((value,index) => (
             <li key={value._id}>
-              <Link to={`breed/${value.id}/${value.imageId}`}>
+              <Link to={`breed/${value.id}/${value.imageId}`} state={{mostSearched: index === 0}}>
                 <figure>
                   <ImageCard src={value.imageUrl} alt={value.name} />
                   <figcaption>{value.name}</figcaption>

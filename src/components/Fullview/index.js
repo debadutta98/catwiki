@@ -4,6 +4,7 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import SkeletonLayout from "./SkeletonLayout";
 import GallerySkeletonLayout from "./GallerySkeletonLayout";
+import { ImageCard } from "../UI/ImageCard";
 
 export default function Fullview() {
   const params = useParams();
@@ -55,6 +56,7 @@ export default function Fullview() {
                 method: 'POST',
                 body: JSON.stringify({
                   imageUrl: response.url,
+                  imageId: response.breeds[0].reference_image_id,
                   id: response.breeds[0].id,
                   name: response.breeds[0].name,
                   description: response.breeds[0].description,
@@ -93,7 +95,7 @@ export default function Fullview() {
         <div className="col">
           <div className="breedImage">
             {/* <span className="highlight"></span> */}
-            <img src={breedDetails.imageUrl} alt="breedimage" />
+            <ImageCard src={breedDetails.imageUrl} alt="breedimage" />
           </div>
           <div className="breedDetails">
             <h2>{breedDetails.name}</h2>
@@ -152,7 +154,7 @@ export default function Fullview() {
           <h2>Other photos</h2>
           <div className="photo-gallery">
             {breedPhotos.map((images) => (
-              <img src={images.url} alt={images.id} key={images.id} />
+              <ImageCard src={images.url} alt={images.id} key={images.id} />
             ))}
           </div>
         </div>

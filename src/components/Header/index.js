@@ -1,60 +1,60 @@
-import { Link } from 'react-router-dom';
-import './index.css';
-import SearchBox from './SearchBox';
-export default function Header(){
-    return <>
-        <div className='hero-section'>
-            <div className='hero-details'>
+import { Link } from "react-router-dom";
+import "./index.css";
+import SearchBox from "./SearchBox";
+import { useEffect, useState } from "react";
+import { ImageCard } from "../UI/ImageCard";
+export default function Header() {
+  const [topSearchedbeed, setTopSearchedBreed] = useState([]);
+  useEffect(() => {
+    fetch("/.netlify/functions/getMostSearchedBreeds?top=4")
+      .then(async (res) => await res.json())
+      .then((result) => {
+        setTopSearchedBreed(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  return (
+    <>
+      <div className="hero-section">
+        <div className="hero-details">
+          <figure>
+            <img src="./images/CatwikiLogo.svg" alt="logo" />
+            <figcaption>Get to know more about your cat breed</figcaption>
+          </figure>
+          <SearchBox />
+        </div>
+        <img
+          src="./images/HeroImagesm.png"
+          alt="cat images"
+          srcSet="./images/HeroImagemd.png 2x, ./images/HeroImagelg.png 3x, ./images/HeroImagesm.png 1x"
+        />
+      </div>
+      <div className="most-searched">
+        <h4>
+          Most Searched Breeds <hr />
+        </h4>
+        <div className="most-searched__details-container">
+          <h1>66+ Breeds For you to discover</h1>
+          <Link to="mostSearched">
+            SEE MORE{" "}
+            <span className="material-icons right-arrow">trending_flat</span>
+          </Link>
+        </div>
+        <ul className="most-searched__breeds">
+          {topSearchedbeed.map((value) => (
+            <li key={value._id}>
+              <Link to={`breed/${value.id}/${value.imageId}`}>
                 <figure>
-                    <img src='./images/CatwikiLogo.svg' alt='logo' />
-                    <figcaption>Get to know more about your cat breed</figcaption>
+                  <ImageCard src={value.imageUrl} alt={value.name} />
+                  <figcaption>{value.name}</figcaption>
                 </figure>
-                <SearchBox />
-            </div>
-            <img src='./images/HeroImagesm.png' alt="cat images" srcSet='./images/HeroImagemd.png 2x, ./images/HeroImagelg.png 3x, ./images/HeroImagesm.png 1x'/>
-        </div>
-        <div className='most-searched'>
-            <h4>Most Searched Breeds <hr/></h4>
-                <div className='most-searched__details-container'>
-                <h1>66+ Breeds For you to discover</h1>
-                <Link to='mostSearched'>SEE MORE <span className="material-icons right-arrow">
-                    trending_flat
-                </span></Link>
-            </div>
-            <ul className='most-searched__breeds'>
-                <li>
-                        <Link to='/view/breed'>
-                            <figure>
-                                <img src='https://cdn2.thecatapi.com/images/anb.jpg' alt='firstimage'/>
-                                <figcaption>Bangal</figcaption>
-                            </figure>
-                        </Link>
-                </li>
-                <li>
-                        <a href='/'>
-                            <figure>
-                                <img src='https://cdn2.thecatapi.com/images/anb.jpg' alt='firstimage' />
-                                <figcaption>Bangal</figcaption>
-                            </figure>
-                        </a> 
-                </li>
-                <li>
-                        <a href='/'>
-                            <figure>
-                                <img src='https://cdn2.thecatapi.com/images/anb.jpg' alt='firstimage' />
-                                <figcaption>Bangal</figcaption>
-                            </figure>
-                        </a>
-                </li>
-                <li>
-                        <a href='/'>
-                            <figure>
-                                <img src='https://cdn2.thecatapi.com/images/anb.jpg' alt='firstimage' />
-                                <figcaption>Bangal</figcaption>
-                            </figure>
-                        </a>
-                </li>
-            </ul>
-        </div>
-    </>;
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  );
 }

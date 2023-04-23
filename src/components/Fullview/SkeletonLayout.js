@@ -1,5 +1,5 @@
 import Skeleton from 'react-loading-skeleton';
-import Rating from '../UI/Rating';
+import RatingSkeleton from '../UI/Rating/RatingSkeleton';
 export default function SkeletonLayout() {
     return <div className="col">
             <div className="breedImage">
@@ -22,35 +22,35 @@ export default function SkeletonLayout() {
                 </div>
                 <div className="rate-container">
                     <b>Adaptability:</b>
-                    <Rating rate={0} />
+                    <RatingSkeleton/>
                 </div>
                 <div className="rate-container">
                     <b>Affection level:</b>
-                    <Rating rate={0} />
+                    <RatingSkeleton/>
                 </div>
                 <div className="rate-container">
                     <b>Child Friendly:</b>
-                    <Rating rate={0} />
+                    <RatingSkeleton/>
                 </div>
                 <div className="rate-container">
                     <b>Grooming:</b>
-                    <Rating rate={0} />
+                    <RatingSkeleton/>
                 </div>
                 <div className="rate-container">
                     <b>Intelligence:</b>
-                    <Rating rate={0} />
+                    <RatingSkeleton/>
                 </div>
                 <div className="rate-container">
                     <b>Health issues:</b>
-                    <Rating rate={0} />
+                    <RatingSkeleton/>
                 </div>
                 <div className="rate-container">
                     <b>Social needs:</b>
-                    <Rating rate={0} />
+                    <RatingSkeleton/>
                 </div>
                 <div className="rate-container">
                     <b>Stranger friendly:</b>
-                    <Rating rate={0} />
+                    <RatingSkeleton/>
                 </div>
             </div>
         </div>

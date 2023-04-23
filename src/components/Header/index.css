@@ -23,19 +23,58 @@
   width: 50%;
   margin-left: 10%;
 }
-.hero-details figure {
-  width: min-content;
-}
+
 .hero-details figcaption {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
-  font-size: clamp(10px, 15px, 24px);
+  font-size: 24px;
+  line-height: 29px;
+  width: 70%;
 }
+
+@media screen and (max-width: 843px) {
+  .hero-details figcaption {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 785px) {
+  .hero-details figcaption {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 594px) {
+  .hero-details figcaption {
+    font-size: 15px;
+    line-height: 25px;
+  }
+  .hero-details {
+    gap: 1rem;
+  }
+}
+
 .hero-details img {
+  max-width: 100%;
   width: 50%;
-  min-width: 15rem;
+  height: auto;
   filter: brightness(0) invert(1);
+}
+
+@media screen and (max-width: 650px) {
+  .hero-details img {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 549px) {
+  .hero-details figcaption {
+    width: 100%;
+    font-size: 12px;
+    line-height: 20px;
+  }
+  .hero-details img {
+    width: 70%;
+  }
 }
 
 .most-searched {
@@ -66,7 +105,6 @@
 
 .most-searched__details-container {
   display: flex;
-  align-items: center;
   gap: 3rem;
   flex-wrap: wrap;
 }
@@ -91,6 +129,20 @@
   gap: 5px;
   margin-left: auto;
 }
+
+@media screen and (max-width: 761px) {
+  .most-searched__details-container {
+    flex-direction: column;
+  }
+  .most-searched__details-container a {
+    margin: 0%;
+  }
+  .most-searched__details-container h1 {
+    font-size: 40px;
+    line-height: 45px;
+  }
+}
+
 .right-arrow {
   color: #7f736a;
 }
@@ -99,14 +151,15 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   justify-items: center;
-  gap: 5px;
+  gap: 3rem;
 }
 
 .most-searched__breeds figure img {
   border-radius: 24px;
-  width: 220px;
-  height: 220px;
-  object-fit: cover;
+  min-width: 220px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
 }
 
 .most-searched__breeds figure figcaption {

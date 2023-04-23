@@ -27,8 +27,8 @@ function App() {
               </>
             }
           />
-          <Route path="breed/:breedId/:imageId" element={<Fullview />} />
-          <Route path="mostSearched" element={<MostSearchedBreed />} />
+          <Route path="breed/:breedId/:imageId" element={<Fullview />} caseSensitive />
+          <Route path="mostSearched" element={<MostSearchedBreed />} caseSensitive />
         </Route>
       </Routes>
     </>

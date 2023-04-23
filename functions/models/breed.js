@@ -18,6 +18,10 @@ const breedSchema = new Schema({
         type: String,
         require: true,
     },
+    imageId: {
+        type: String,
+        require: true
+    },
     searchCount:{
         type: Number,
         required: true

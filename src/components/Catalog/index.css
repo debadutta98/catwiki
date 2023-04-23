@@ -71,3 +71,16 @@
   height: auto;
   margin-left: auto;
 }
+
+@media screen and (max-width: 932px) {
+  .catalog {
+    flex-direction: column;
+    gap: 3rem;
+  }
+  .catalog__col:first-child {
+    width: 100%;
+  }
+  .catalog__col:last-child {
+    width: 100%;
+  }
+}

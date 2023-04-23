@@ -1,6 +1,5 @@
 .searchbox-container {
   width: 70%;
-  min-width: 20rem;
 }
 .searchbox {
   width: 100%;
@@ -40,7 +39,23 @@
   padding: 9px 10px;
   position: absolute;
   width: 70%;
-  min-width: 20rem;
+}
+
+@media screen and (max-width: 785px) {
+  .searchbox-container {
+    width: 90%;
+  }
+  .suggestions-container {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 549px) {
+  .searchbox-container {
+    width: 100%;
+  }
+  .suggestions-container {
+    width: 100%;
+  }
 }
 .suggestions {
   width: 100%;
@@ -61,7 +76,7 @@
   cursor: pointer;
 }
 .suggestions li a {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
   font-size: 18px;

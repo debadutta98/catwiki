@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Catalog from "./components/Catalog";
 import Fullview from "./components/Fullview";
 import MostSearchedBreed from "./components/MostSearchedBreeds";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           />
           <Route path="breed/:breedId/:imageId" element={<Fullview />} caseSensitive />
           <Route path="mostSearched" element={<MostSearchedBreed />} caseSensitive />
+          <Route path="*" element={<NotFound/>}/>
         </Route>
       </Routes>
     </>

@@ -1,0 +1,17 @@
+.failed-info {
+    margin: auto;
+    text-align: center;
+    width: 40%;
+    height: 45vh;
+    margin: 5rem auto;
+}
+.failed-info figure img {
+    max-width: 100%;
+    height: auto;
+}
+.failed-info figure figcaption {
+    margin-top: 1rem;
+    font-size: 20px;
+    font-weight: 500;
+    color: #291507;
+}

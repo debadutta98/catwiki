@@ -31,7 +31,7 @@ function App() {
           />
           <Route path="breed" element={<Fullview />} errorElement={<NotFound message="Please refresh this page or go back and try again" />} caseSensitive />
           <Route path="mostSearched" element={<MostSearchedBreed />} errorElement={<NotFound message="Please refresh this page or go back and try again" />}  caseSensitive />
-          <Route path="*" element={<NotFound message="Please refresh this page or go back and try again"/>} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>

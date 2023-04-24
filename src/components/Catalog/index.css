@@ -39,9 +39,7 @@
 }
 
 .catalog__col:last-child {
-  display: grid;
-  width: 55%;
-  grid-template-columns: auto auto;
+  display: flex;
   gap: 1.5rem;
   flex: 1 0;
 }
@@ -62,14 +60,18 @@
 }
 
 .catalog__col:last-child div {
-  display: grid;
-  grid-template-columns: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 1.5rem;
 }
 
 .catalog__col:last-child div img {
   max-width: 100%;
   height: auto;
+}
+.catalog__col:last-child div:first-child img:last-child {
+  padding-left: 2.5rem;
 }
 
 @media screen and (max-width: 932px) {

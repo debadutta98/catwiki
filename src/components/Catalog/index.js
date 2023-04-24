@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom';
 import './index.css';
 export default function Catalog() {
     return <div className="catalog">
         <div className="catalog__col">
             <h1><hr />Why should you have a cat?</h1>
             <p>Having a cat around you can actually trigger the release of calming chemicals in your body which lower your stress and anxiety leves</p>
-            <a href='/'>SEE MORE <span className="material-icons right-arrow">
+            <Link to='/'>SEE MORE <span className="material-icons right-arrow">
                 trending_flat
-            </span></a>
+            </span></Link>
         </div>
         <div className="catalog__col">
             <div>

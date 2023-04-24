@@ -55,6 +55,7 @@
   color: rgba(41, 21, 7, 0.6);
   display: flex;
   gap: 5px;
+  width: fit-content;
 }
 .right-arrow {
   color: #7f736a;
@@ -69,7 +70,6 @@
 .catalog__col:last-child div img {
   max-width: 100%;
   height: auto;
-  margin-left: auto;
 }
 
 @media screen and (max-width: 932px) {

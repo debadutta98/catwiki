@@ -3,6 +3,7 @@ import "./index.css";
 import SearchBox from "./SearchBox";
 import { useEffect, useState } from "react";
 import { ImageCard } from "../UI/ImageCard";
+import TopSearchedSkeleton from "./TopSearchedSkeleton";
 export default function Header() {
   const [topSearchedbeed, setTopSearchedBreed] = useState([]);
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function Header() {
           </Link>
         </div>
         <ul className="most-searched__breeds">
-          {topSearchedbeed.map((value,index) => (
+          {topSearchedbeed.length > 0 ? topSearchedbeed.map((value,index) => (
             <li key={value._id}>
               <Link to='breed' state={{ mostSearched: index === 0, imageId: value.imageId, breedId: value.id }}>
                 <figure>
@@ -52,7 +53,7 @@ export default function Header() {
                 </figure>
               </Link>
             </li>
-          ))}
+          )): <TopSearchedSkeleton/>}
         </ul>
       </div>
     </>
